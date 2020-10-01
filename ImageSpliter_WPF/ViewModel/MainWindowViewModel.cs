@@ -57,7 +57,7 @@ namespace ImageSpliter_WPF.ViewModel
         public ICommand FindImage_Button_Click { get; set; }
         public ICommand DisplayImage_Image_SettingUpdate { get; set; }
         public ICommand Cut_Button_Click { get; set; }
-
+        
         public MainWindowViewModel()
         {
             // Member & Properties Init // 멤버와 프로퍼티 초기화
@@ -77,7 +77,6 @@ namespace ImageSpliter_WPF.ViewModel
             HorizontalSize_CheckBox_IsChecked = true;
             VerticalSize_CheckBox_IsChecked = true;
             InternalMargin_TextBox_Text = new Thickness(10, 10, 10, 10);
-
         }
 
         private void FindImage_Button_Click_Command()
@@ -217,65 +216,3 @@ namespace ImageSpliter_WPF.ViewModel
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- * DisplayImage_Image_SettingUpdate_Command()
- * 완료되면 삭제
-int _lef = 0;
-int _top = 0;
-int _wid = HorizontalSize_TextBox_Text;
-int _hei = VerticalSize_TextBox_Text;
-int displayCount = 0;
-
-for (int i = 0; i < SplitRowsCount_TextBox_Text; i++)
-{
-    for (int j = 0; j < SplitColumnsCount_TextBox_Text; j++)
-    {
-        displayCount++;
-        _lef = _lef + (int)InternalMargin_TextBox_Text.Left;
-        _top = _top + (int)InternalMargin_TextBox_Text.Top;
-        _wid = _wid - (int)(InternalMargin_TextBox_Text.Right) - (int)InternalMargin_TextBox_Text.Left;
-        _hei = _hei - (int)(InternalMargin_TextBox_Text.Bottom) - (int)InternalMargin_TextBox_Text.Top;
-        _graphics.FillRectangle(_rectanglePen,
-            new Rectangle(_lef, _top, _wid, _hei));
-        _graphics.DrawString(displayCount.ToString(), new Font("맑은고딕", 12), _stringPen, new System.Drawing.Point(_lef, _top));
-
-        _lef = _lef - (int)InternalMargin_TextBox_Text.Left + HorizontalSize_TextBox_Text;
-        _top = _top - (int)InternalMargin_TextBox_Text.Top;
-        _wid = _wid + (int)(InternalMargin_TextBox_Text.Right * 2);// + HorizontalSize_TextBox_Text;
-        _hei = _hei + (int)(InternalMargin_TextBox_Text.Bottom * 2);
-    }
-    _lef = 0;   // 줄이 변경될 때 마다 x가 0으로 와야하기 때문에 x1 = 0
-    _top = VerticalSize_TextBox_Text * (i + 1);     // 줄이 변경되었을 때 y는 다음줄로 와야하기 때문에
-    _wid = HorizontalSize_TextBox_Text;
-    _hei = VerticalSize_TextBox_Text;
-}
-*/

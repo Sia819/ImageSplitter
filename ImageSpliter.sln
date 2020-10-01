@@ -3,17 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSpliter", "ImageSpliter\ImageSpliter.csproj", "{0BFFCA42-2CEE-4818-874D-7D4DBC1A4A81}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestForm", "TestForm\TestForm.csproj", "{6F28E877-27F3-43B1-B6EF-B65BD025FFF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testWPF", "testWPF\testWPF.csproj", "{EA7E4CBF-76D0-4F86-A7B5-05F858BB4BDA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSpliterTests", "ImageSpliterTests\ImageSpliterTests.csproj", "{14A1CA92-412D-47B5-8277-42A1E3357BDD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSpliter_WPF", "ImageSpliter_WPF\ImageSpliter_WPF.csproj", "{D64E6B73-E80D-41CC-9E11-095DD34A9F6D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSpliter_WPFTests", "ImageSpliter_WPFTests\ImageSpliter_WPFTests.csproj", "{243A6EBA-0B42-4B05-9594-3D13EEAE1C59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,30 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0BFFCA42-2CEE-4818-874D-7D4DBC1A4A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BFFCA42-2CEE-4818-874D-7D4DBC1A4A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BFFCA42-2CEE-4818-874D-7D4DBC1A4A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BFFCA42-2CEE-4818-874D-7D4DBC1A4A81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F28E877-27F3-43B1-B6EF-B65BD025FFF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F28E877-27F3-43B1-B6EF-B65BD025FFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F28E877-27F3-43B1-B6EF-B65BD025FFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F28E877-27F3-43B1-B6EF-B65BD025FFF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA7E4CBF-76D0-4F86-A7B5-05F858BB4BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA7E4CBF-76D0-4F86-A7B5-05F858BB4BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA7E4CBF-76D0-4F86-A7B5-05F858BB4BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA7E4CBF-76D0-4F86-A7B5-05F858BB4BDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14A1CA92-412D-47B5-8277-42A1E3357BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14A1CA92-412D-47B5-8277-42A1E3357BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14A1CA92-412D-47B5-8277-42A1E3357BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14A1CA92-412D-47B5-8277-42A1E3357BDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D64E6B73-E80D-41CC-9E11-095DD34A9F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D64E6B73-E80D-41CC-9E11-095DD34A9F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D64E6B73-E80D-41CC-9E11-095DD34A9F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D64E6B73-E80D-41CC-9E11-095DD34A9F6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{243A6EBA-0B42-4B05-9594-3D13EEAE1C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{243A6EBA-0B42-4B05-9594-3D13EEAE1C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{243A6EBA-0B42-4B05-9594-3D13EEAE1C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{243A6EBA-0B42-4B05-9594-3D13EEAE1C59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

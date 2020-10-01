@@ -6,7 +6,7 @@
 # User-specific files
 *.rsuser
 *.suo
-*.user
+*.userI
 *.userosscache
 *.sln.docstates
 
@@ -338,10 +338,3 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-
-# Test dummy Projects
-ImageSpliter/
-ImageSpliter_WPFTests/
-ImageSpliterTests/
-TestForm/
-testWPF/
