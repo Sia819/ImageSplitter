@@ -4,11 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageSpliter_WPF"
-        
         xmlns:viewmodel="clr-namespace:ImageSpliter_WPF.ViewModel"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        
         mc:Ignorable="d"
         Title="MainWindow" Height="950" Width="500">
     <Window.DataContext>

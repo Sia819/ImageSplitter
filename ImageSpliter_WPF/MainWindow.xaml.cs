@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ImageSpliter_WPF
 {
@@ -27,14 +15,14 @@ namespace ImageSpliter_WPF
 
         private void CheckBox_CheckedChanged(object sender, RoutedEventArgs e)
         {
-            if (sender is CheckBox && HorizontalSize_TextBox != null && VerticalSize_TextBox != null)
+            if (sender is CheckBox checkBox && HorizontalSize_TextBox != null && VerticalSize_TextBox != null)
             {
-                if ((sender as CheckBox).IsChecked == true)
+                if (checkBox.IsChecked == true)
                 {
                     HorizontalSize_TextBox.IsReadOnly =
                     VerticalSize_TextBox.IsReadOnly = true;
                 }
-                else if ((sender as CheckBox).IsChecked == false)
+                else if (checkBox.IsChecked == false)
                 {
                     HorizontalSize_TextBox.IsReadOnly =
                     VerticalSize_TextBox.IsReadOnly = false;
