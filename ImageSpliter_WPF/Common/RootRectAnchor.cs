@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace ImageSpliter_WPF.Common
 {
@@ -33,19 +28,13 @@ namespace ImageSpliter_WPF.Common
         public int AnchorMaxX
         {
             get => PositionX + ScaleX;
-            set
-            {
-                ScaleX -= PositionX + ScaleX - value;
-            }
+            set => ScaleX -= PositionX + ScaleX - value;
         }
         //사각형의 아래면의 위치
         public int AnchorMaxY
         {
             get => PositionY + ScaleY;
-            set
-            {
-                ScaleY -= PositionY + ScaleY - value;
-            }
+            set => ScaleY -= PositionY + ScaleY - value;
         }
 
         // 좌측상단모서리의 X
@@ -79,7 +68,7 @@ namespace ImageSpliter_WPF.Common
 
         public override string ToString()
         {
-            return String.Format("{0}, {1}, {2}, {3}", PositionX, PositionY, ScaleX, ScaleY);
+            return $"{PositionX}, {PositionY}, {ScaleX}, {ScaleY}";
         }
     }
 }
