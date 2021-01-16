@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageSpliter_WPF.Common
 {
@@ -42,10 +38,7 @@ namespace ImageSpliter_WPF.Common
         public int AnchorX2
         {
             get => X1 + Width;
-            set
-            {
-                Width -= X1 + Width - value;
-            }
+            set => Width -= X1 + Width - value;
         }
 
         /// <summary>
@@ -55,10 +48,7 @@ namespace ImageSpliter_WPF.Common
         public int AnchorY2
         {
             get => Y1 + Height;
-            set
-            {
-                Height -= Y1 + Height - value;
-            }
+            set => Height -= Y1 + Height - value;
         }
         /// <summary>
         /// Dependent X-Axis start position coordinates
