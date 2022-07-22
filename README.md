@@ -1,3 +1,3 @@
-# ImageSpliter
+# ImageSplitter
 
 이미지를 격자에 맞게 Grid 로 자르는건 힘든 작업이지만, 이 프로그램으로 자른다면 훨쉰 쉬울 것 입니다.
