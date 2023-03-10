@@ -44,12 +44,14 @@
         </Grid>
         <!-- 측면 메뉴 패널 -->
         <DockPanel Grid.Column="0" Grid.Row="1">
-            <StackPanel  Margin="10 5 10 5" DockPanel.Dock="Top">
+            <StackPanel  Margin="10 5 10 5" DockPanel.Dock="Top" >
 
                 <ComboBox ItemsSource="{Binding ImageSplitMode_ComboBox_ItemsSource}"
-                          SelectedIndex="0" Height="30"  VerticalContentAlignment="Center"/>
+                          SelectedIndex="{Binding SplitMode_SelectedIndex}"
+                          SelectionChanged="{mvvm:EventBinding SplitModeChanged}"
+                          Height="30"  VerticalContentAlignment="Center"/>
 
-                <StackPanel Height="auto">
+                <StackPanel Height="{Binding GridModeHeight}">
                     <DockPanel Margin="0 10">
                         <TextBlock Text="Split Columns Count" Grid.Column="0" Grid.Row="0"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -121,13 +123,26 @@
                         </TextBox>
                     </DockPanel>
                 </StackPanel>
+                <StackPanel Height="{Binding WhiteSpaceRemoveModeHeight}">
+                    
+                </StackPanel>
 
             </StackPanel>
             <Grid/>
+
+            <Button Command="{Binding CopyClipBoard}" Content="Copy Clipboard" DockPanel.Dock="Bottom"
+                    MaxWidth="220" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                    Margin="10"/>
+                    
             <Button Command="{Binding Cut_Button_Click}" Content="Cut" DockPanel.Dock="Bottom"
                     MaxWidth="220" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
                     Margin="10"/>
+            
+            
+           
         </DockPanel>
+
+       
 
         <GridSplitter Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="2"
                       MinWidth="3" Background="DarkGray"
