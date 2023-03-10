@@ -1,12 +1,17 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace ImageSpliter_WPF.Common
+namespace ImageSpliter.Common
 {
     public class BitmapExtension
     {
-        public static BitmapImage BitmapToImageSource(Bitmap bitmap)
+        public static BitmapImage BitmapToBitmapImage(Bitmap bitmap)
         {
             using (MemoryStream memory = new MemoryStream())
             {

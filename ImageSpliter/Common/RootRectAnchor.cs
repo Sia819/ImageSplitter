@@ -1,6 +1,11 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ImageSpliter_WPF.Common
+namespace ImageSpliter.Common
 {
     public class RootRectAnchor
     {

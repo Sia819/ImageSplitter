@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ImageSpliter_WPF.Common
+namespace ImageSpliter.Common
 {
     public struct ThicknessI : IEquatable<ThicknessI>
     {
@@ -58,13 +62,13 @@ namespace ImageSpliter_WPF.Common
             for (int i = 0; i < _splitted_Str.Length; i++)
                 if (!int.TryParse(_splitted_Str[i], out _margin[i]))
                 {
-                    _left   = -1;
-                    _top    = -1;
-                    _right  = -1;
+                    _left = -1;
+                    _top = -1;
+                    _right = -1;
                     _bottom = -1;
                     return;
                 }
-                    
+
 
             if (_margin.Length == 4)
             {
