@@ -3,25 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
+using System.IO;
+using System.Linq;
 using System.Drawing;
 using CommunityToolkit.Mvvm.Input;
 using System.Drawing.Imaging;
-using System.IO;
+using ImageSpliter.Model;
+
+using System.Windows.Input;
 
 namespace ImageSpliter.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public enum ImageSplitMode
-        {
-            GridMode,
-            WhiteSpaceRemoveMode
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Bitmap OriginalBitmap
@@ -35,9 +32,8 @@ namespace ImageSpliter.ViewModel
         }
         public bool IsBitmapEnable => _originalBitmap != null && _originalBitmap.PixelFormat != System.Drawing.Imaging.PixelFormat.DontCare;
 
-        private EventHandler _originalBitmap_ImageChanged;
 
-
+        #region Public Properties
         public double GridModeHeight { get; set; }
         public double WhiteSpaceRemoveModeHeight { get; set; }
 
@@ -109,7 +105,10 @@ namespace ImageSpliter.ViewModel
         /// Image 컨트롤에 표시될 이미지
         /// </summary>
         public BitmapImage DisplayImage_Image_Source { get; set; }
+        #endregion Public Properties
 
+        
+        #region Commands
         /// <summary>
         /// 이미지 불러오기 버튼 커맨드
         /// </summary>
@@ -134,14 +133,24 @@ namespace ImageSpliter.ViewModel
         /// 자르기 모드가 변경된 경우
         /// </summary>
         public RelayCommand SplitModeChanged { get; set; }
+
+        /// <summary>
+        /// 이미지를 클립보드로 저장합니다.
+        /// </summary>
         public RelayCommand CopyClipBoard { get; set; }
 
+        public RelayCommand<KeyEventArgs> Window_KeyDown { get; set; }
+        #endregion Commands
+
+
         #region private fields
+        private EventHandler _originalBitmap_ImageChanged;
         private List<Rectangle> _rectedImages;
         private Bitmap _originalBitmap; // property 1:1
         private ImageSplitMode _currentSplitMode;
         #endregion
 
+        #region Constructor
         public MainWindowViewModel()
         {
             // Command 바인딩 리스너 등록
@@ -151,6 +160,7 @@ namespace ImageSpliter.ViewModel
             this.ImageDrop = new RelayCommand<DragEventArgs>(LoadImageFromDragDrop_Command);
             this.SplitModeChanged = new RelayCommand(SplitModeChanged_Command);
             this.CopyClipBoard = new RelayCommand(SaveToClipboard_Command);
+            this.Window_KeyDown = new RelayCommand<KeyEventArgs>(Window_KeyDown_Command);
 
             this.ImageSplitMode_ComboBox_ItemsSource = new ObservableCollection<ImageSplitMode>();
             this.ImageSplitMode_ComboBox_ItemsSource.Add(ImageSplitMode.GridMode);
@@ -176,9 +186,9 @@ namespace ImageSpliter.ViewModel
             this.VerticalSize_CheckBox_IsChecked = true;
             this.InternalMargin_TextBox_Text = new Thickness(10, 10, 10, 10);
         }
+        #endregion Constructor
 
         #region Private Command
-
         /// <summary>
         /// 자르기 모드가 변경되었습니다.
         /// </summary>
@@ -230,7 +240,7 @@ namespace ImageSpliter.ViewModel
         /// <param name="e"></param>
         private void LoadImageFromDragDrop_Command(DragEventArgs? e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e!.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string path = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
 
@@ -291,11 +301,8 @@ namespace ImageSpliter.ViewModel
                 images[i].Save(i + ".png", ImageFormat.Png);
             }
         }
-        #endregion
 
-
-
-
+        
         private void GridModeImageSplit()
         {
             List<int> x_AxisSplit = new List<int>();        // x축 잘라질 좌표값
@@ -444,6 +451,26 @@ namespace ImageSpliter.ViewModel
             graphics.Dispose();
             Clipboard.SetImage(BitmapExtension.BitmapToBitmapImage(image));
         }
+
+        /// <summary>
+        /// Ctrl + V 동작시 클립보드에 있는 이미지를 프로그램에서 인식합니다.
+        /// </summary>
+        private void Window_KeyDown_Command(KeyEventArgs? e)
+        {
+            if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (Clipboard.ContainsImage())
+                {
+                    this.OriginalBitmap = BitmapExtension.BitmapSourceToBitmap(Clipboard.GetImage());
+                    DisplayImage_Image_SettingUpdate_Command();
+                }
+            }
+            else if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                SaveToClipboard_Command();
+            }
+        }
+        #endregion
 
     }
 }

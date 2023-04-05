@@ -24,15 +24,5 @@ namespace ImageSpliter
         {
             InitializeComponent();
         }
-
-        private void Rectangle_Drop(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
