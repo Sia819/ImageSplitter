@@ -1,0 +1,35 @@
+﻿<Window x:Class="ImageSplitter.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImageSplitter.View"
+        xmlns:converter="clr-namespace:ImageSplitter.Converter"
+        xmlns:mvvm="clr-namespace:MvvmEventBinding;assembly=MvvmEventBinding"
+        mc:Ignorable="d"
+        Title="ImageSplitter" Height="450" Width="800"
+        DataContext="{Binding VM_MainViewModel, Source={StaticResource ViewModelLocator}}"
+        KeyDown="{mvvm:EventBinding Window_KeyDown}">
+    <Window.Resources>
+        <converter:EnumToIntConverter x:Key="EnumToIntConverter" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" Background="#F0F0F0">
+            <ComboBox SelectedIndex="{Binding CurrentMode, Converter={StaticResource EnumToIntConverter}}" MinWidth="220" Height="40" FontSize="16" DockPanel.Dock="Top"
+                      ItemsSource="{Binding ImageSplitMode_ComboBox_ItemsSource}" DisplayMemberPath="Name"
+                      VerticalContentAlignment="Center" SelectionChanged="{mvvm:EventBinding SplitModeChanged}">
+            </ComboBox>
+            <Frame Name="MenuFrame" NavigationUIVisibility="Hidden" 
+                   Source="{Binding CurrentMenuUri, TargetNullValue='pack://application:,,,/View/GridMenuPage.xaml'}" />
+        </DockPanel>
+
+        <Frame Name="ContentFrame" Grid.Column="1" NavigationUIVisibility="Hidden"
+               Source="{Binding CurrentContentUri, TargetNullValue='pack://application:,,,/View/GridPage.xaml'}" />
+    </Grid>
+</Window>
