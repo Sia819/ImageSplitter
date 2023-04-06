@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace ImageSplitter.Common
@@ -49,5 +50,6 @@ namespace ImageSplitter.Common
             bitmap.UnlockBits(bitmapData); // Unlock the Bitmap's bits
             return bitmap;
         }
+
     }
 }

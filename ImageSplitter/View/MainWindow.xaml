@@ -7,9 +7,9 @@
         xmlns:converter="clr-namespace:ImageSplitter.Converter"
         xmlns:mvvm="clr-namespace:MvvmEventBinding;assembly=MvvmEventBinding"
         mc:Ignorable="d"
-        Title="ImageSplitter" Height="450" Width="800"
+        Title="ImageSplitter" Height="450" Width="800" Focusable="True"
         DataContext="{Binding VM_MainViewModel, Source={StaticResource ViewModelLocator}}"
-        KeyDown="{mvvm:EventBinding Window_KeyDown}">
+        KeyDown="Window_KeyDown">
     <Window.Resources>
         <converter:EnumToIntConverter x:Key="EnumToIntConverter" />
     </Window.Resources>

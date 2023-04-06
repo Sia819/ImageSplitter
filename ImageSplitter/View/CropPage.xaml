@@ -4,29 +4,61 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ImageSplitter.View"
+      xmlns:mvvm="clr-namespace:MvvmEventBinding;assembly=MvvmEventBinding"
+      xmlns:converter="clr-namespace:ImageSplitter.Converter"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800" d:Background="White"
+      d:DesignHeight="450" d:DesignWidth="800" d:Background="White" Focusable="True"
       Title="CropPage"
-      DataContext="{Binding VM_MainViewModel, Source={StaticResource ViewModelLocator}}">
+      DataContext="{Binding VM_Page1VM, Source={StaticResource ViewModelLocator}}">
+    <Page.Resources>
+        <converter:SelectedImageConverter x:Key="SelectedImageConverter"/>
+    </Page.Resources>
 
     <Grid>
-        <TextBlock FontSize="20">Crop</TextBlock>
-        <Grid Width="auto" Height="100" Background="AliceBlue" VerticalAlignment="Bottom" Margin="0 20">
-            <ListView>
-                <ListView.ItemsPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.71cm"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Display Mode Select Bar -->
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 3"
+                    Grid.Column="0" Grid.Row="0">
+            <TextBlock Text="Image Display Mode : " Margin="10,0,0,0"/>
+            <ComboBox Text="{Binding DisplayImageMode_ComboBox_Text}" 
+                      ItemsSource="{Binding DisplayImageMode_ComboBox_ItemsSource}"
+                      SelectedIndex="2"
+                      Width="100" />
+        </StackPanel>
+        
+        <!-- Image Display Area -->
+        <Rectangle Fill="LightGray" Grid.Column="0" Grid.Row="1" AllowDrop="True"
+                   Drop="{mvvm:EventBinding ImageDrop}"></Rectangle>
+        <Image Stretch="Uniform" Grid.Row="1">
+            <Image.Source>
+                <MultiBinding Converter="{StaticResource SelectedImageConverter}">
+                    <Binding Path="DisplayImages" />
+                    <Binding Path="SelectedImage" />
+                </MultiBinding>
+            </Image.Source>
+        </Image>
+
+        <!-- Image Select Area -->
+        <Grid Width="auto" Height="100" Background="AliceBlue" Grid.Row="2">
+            <ListBox ItemsSource="{Binding DisplayImages}" SelectedIndex="{Binding SelectedImage}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}" Width="100" Height="100" Stretch="Uniform" Margin="5"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <Rectangle Width="90" Height="90" Fill="AntiqueWhite"/>
-                <Rectangle Width="90" Height="90" Fill="AntiqueWhite" />
-                <Rectangle Width="90" Height="90" Fill="AntiqueWhite" />
-            </ListView>
-            <!--<StackPanel Orientation="Horizontal">
-                <Image Width="90" Height="90"/>
-                <Image Width="90" Height="90"/>
-                <Image Width="90" Height="90"/>
-            </StackPanel>-->
+                </ListBox.ItemsPanel>
+            </ListBox>
         </Grid>
+
     </Grid>
 </Page>

@@ -23,15 +23,15 @@
                           ItemsSource="{Binding DisplayImageMode_ComboBox_ItemsSource}"
                           SelectedIndex="2"
                           Width="100" />
-
-
         </StackPanel>
         <Rectangle Fill="LightGray" Grid.Column="0" Grid.Row="1" AllowDrop="True"
-                       Drop="{mvvm:EventBinding ImageDrop}"></Rectangle>
+                   Drop="{mvvm:EventBinding ImageDrop}"></Rectangle>
         <Image Source="{Binding DisplayImage_Image_Source}"
-                   Stretch="{Binding DisplayImageMode_ComboBox_Text}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Grid.Column="0" Grid.Row="1"/>
+               Stretch="{Binding DisplayImageMode_ComboBox_Text}"
+               Drop="{mvvm:EventBinding ImageDrop}"
+               AllowDrop="True"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Grid.Column="0" Grid.Row="1"/>
     </Grid>
 </Page>

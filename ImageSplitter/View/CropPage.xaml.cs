@@ -24,5 +24,10 @@ namespace ImageSplitter.View
         {
             InitializeComponent();
         }
+
+        private void Page_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

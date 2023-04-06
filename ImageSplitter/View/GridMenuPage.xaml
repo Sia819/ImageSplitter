@@ -14,7 +14,7 @@
         <converter:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
     </Page.Resources>
 
-    <StackPanel Height="{Binding GridModeHeight}">
+    <StackPanel>
         <DockPanel Margin="0 10">
             <TextBlock Text="Split Columns Count" Grid.Column="0" Grid.Row="0"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"/>

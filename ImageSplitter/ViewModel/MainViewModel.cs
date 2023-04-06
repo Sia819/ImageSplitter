@@ -1,24 +1,23 @@
-﻿using ImageSplitter.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
-using System.IO;
-using System.Linq;
-using System.Drawing;
-using CommunityToolkit.Mvvm.Input;
-using System.Drawing.Imaging;
-using ImageSplitter.Model;
-
 using System.Windows.Input;
-using System.Reflection;
+using ImageSplitter.Model;
+using ImageSplitter.Common;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace ImageSplitter.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged, IKeyboardInput
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -34,7 +33,7 @@ namespace ImageSplitter.ViewModel
         public bool IsBitmapEnable => _originalBitmap != null && _originalBitmap.PixelFormat != System.Drawing.Imaging.PixelFormat.DontCare;
 
         #region Public Properties
-
+        public object SelectedDataContext { get; set; }
         /// <summary>
         /// 불러와진 이미지 주소
         /// </summary>
@@ -139,8 +138,6 @@ namespace ImageSplitter.ViewModel
         /// 이미지를 클립보드로 저장합니다.
         /// </summary>
         public RelayCommand CopyClipBoard { get; set; }
-
-        public RelayCommand<KeyEventArgs> Window_KeyDown { get; set; }
         #endregion Commands
 
         #region private fields
@@ -159,7 +156,6 @@ namespace ImageSplitter.ViewModel
             this.ImageDrop = new RelayCommand<DragEventArgs>(LoadImageFromDragDrop_Command);
             this.SplitModeChanged = new RelayCommand(SplitMode_SelectionChanged);
             this.CopyClipBoard = new RelayCommand(SaveToClipboard_Command);
-            this.Window_KeyDown = new RelayCommand<KeyEventArgs>(Window_KeyDown_Command);
 
             // ComboBox 모드 변경시 보여질 리스트들
             this.ImageSplitMode_ComboBox_ItemsSource = new ObservableCollection<ModeName>();
@@ -198,14 +194,17 @@ namespace ImageSplitter.ViewModel
                 case ImageSplitMode.GridMode:
                     CurrentContentUri = "pack://application:,,,/View/GridPage.xaml";
                     CurrentMenuUri = "pack://application:,,,/View/GridMenuPage.xaml";
+                    SelectedDataContext = Ioc.Default.GetService<MainViewModel>()!;
                     break;
                 case ImageSplitMode.WhiteSpaceRemoveMode:
                     CurrentContentUri = "pack://application:,,,/View/RemoveWhitePage.xaml";
                     CurrentMenuUri = "pack://application:,,,/View/RemoveWhiteMenuPage.xaml";
+                    SelectedDataContext = Ioc.Default.GetService<MainViewModel>()!;
                     break;
                 case ImageSplitMode.CropMode:
                     CurrentContentUri = "pack://application:,,,/View/CropPage.xaml";
                     CurrentMenuUri = "pack://application:,,,/View/CropMenuPage.xaml";
+                    SelectedDataContext = Ioc.Default.GetService<CropVM>()!;
                     break;
                 default:
                     break;
@@ -444,6 +443,8 @@ namespace ImageSplitter.ViewModel
 
         private void SaveToClipboard_Command()
         {
+            if (_rectedImages.Count <= 0) return;
+
             var image = new Bitmap(_rectedImages[0].Width, _rectedImages[0].Height);
             var graphics = Graphics.FromImage(image);
             graphics.DrawImage(OriginalBitmap,
@@ -457,7 +458,7 @@ namespace ImageSplitter.ViewModel
         /// <summary>
         /// Ctrl + V 동작시 클립보드에 있는 이미지를 프로그램에서 인식합니다.
         /// </summary>
-        private void Window_KeyDown_Command(KeyEventArgs? e)
+        public void KeyDown_Command(KeyEventArgs? e)
         {
             if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
             {
@@ -472,6 +473,8 @@ namespace ImageSplitter.ViewModel
                 SaveToClipboard_Command();
             }
         }
+
+        
         #endregion
     }
 }

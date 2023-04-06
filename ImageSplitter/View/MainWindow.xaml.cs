@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImageSplitter.Model;
+using ImageSplitter.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -23,6 +25,14 @@ namespace ImageSplitter.View
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (this.DataContext is MainViewModel mv && mv.SelectedDataContext is IKeyboardInput input)
+            {
+                input.KeyDown_Command(e);
+            }
         }
     }
 }
