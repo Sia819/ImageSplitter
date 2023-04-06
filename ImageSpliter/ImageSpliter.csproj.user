@@ -7,7 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\CropMenuPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\CropPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\GridMenuPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\GridPage.xaml.cs">
@@ -19,15 +25,21 @@
     <Compile Update="View\!MenuBarUC.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\RemoveWhite.xaml.cs">
+    <Compile Update="View\RemoveWhiteMenuPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\RemoveWhiteMenuUC.xaml.cs">
+    <Compile Update="View\RemoveWhitePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="View\CropMenuPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\CropPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\GridMenuPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\GridPage.xaml">
@@ -42,10 +54,10 @@
     <Page Update="View\!MenuBarUC.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\RemoveWhite.xaml">
+    <Page Update="View\RemoveWhiteMenuPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\RemoveWhiteMenuUC.xaml">
+    <Page Update="View\RemoveWhitePage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

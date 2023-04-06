@@ -1,0 +1,89 @@
+﻿<Page x:Class="ImageSpliter.View.GridMenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ImageSpliter.View"
+      xmlns:mvvm="clr-namespace:MvvmEventBinding;assembly=MvvmEventBinding"
+      xmlns:converter="clr-namespace:ImageSpliter.Converter"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="300" d:Background="White"
+      Title="GridMenuPage"
+      DataContext="{Binding VM_MainViewModel, Source={StaticResource ViewModelLocator}}">
+    <Page.Resources>
+        <converter:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
+    </Page.Resources>
+
+    <StackPanel Height="{Binding GridModeHeight}">
+        <DockPanel Margin="0 10">
+            <TextBlock Text="Split Columns Count" Grid.Column="0" Grid.Row="0"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <!-- TODO : 0인 경우 Model에서 붉은색으로 경고주도록 하기 -->
+            <TextBox Text="{Binding SplitColumnsCount_TextBox_Text, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                 TextChanged="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}">
+            </TextBox>
+        </DockPanel>
+
+        <DockPanel Margin="0 10">
+            <TextBlock Text="Split Rows Count"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="1"/>
+            <TextBox Text="{Binding SplitRowsCount_TextBox_Text, UpdateSourceTrigger=PropertyChanged}"
+                                 Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                 TextChanged="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}">
+            </TextBox>
+        </DockPanel>
+
+        <DockPanel Margin="0 10">
+            <CheckBox IsChecked="{Binding HorizontalSize_CheckBox_IsChecked}"
+                                  Checked="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}"
+                                  Content="(Autosize) Horizontal Size" 
+                                  Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
+            <!-- TODO : ReadOnly인 경우 회색같은 스타일로 적용해주기 -->
+            <TextBox x:Name="HorizontalSize_TextBox" 
+                                 IsEnabled="{Binding HorizontalSize_CheckBox_IsChecked, Converter={StaticResource InvertBooleanConverter}}"
+                                 Text="{Binding HorizontalSize_TextBox_Text, UpdateSourceTrigger=PropertyChanged}"
+                                 Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                 TextChanged="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}">
+            </TextBox>
+        </DockPanel>
+
+        <DockPanel Margin="0 10">
+            <CheckBox IsChecked="{Binding VerticalSize_CheckBox_IsChecked}"
+                                  Checked="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}"
+                                  Content="(Autosize) Vertical size" 
+                                  Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" />
+            <!-- TODO : ReadOnly인 경우 회색같은 스타일로 적용해주기 -->
+            <TextBox x:Name="VerticalSize_TextBox"
+                                 IsEnabled="{Binding VerticalSize_CheckBox_IsChecked, Converter={StaticResource InvertBooleanConverter}}"
+                                 Text="{Binding VerticalSize_TextBox_Text, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                 TextChanged="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}">
+            </TextBox>
+        </DockPanel>
+
+        <DockPanel Margin="0 10">
+            <TextBlock Text="Outer margin"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="4"/>
+            <TextBox Text="{Binding OuterMargin_TextBox_Text, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource, FallbackValue='0,0,0,0'}"
+                                 Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                 TextChanged="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}">
+            </TextBox>
+        </DockPanel>
+
+        <DockPanel Margin="0 10">
+            <TextBlock Text="Internal margin"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="5"/>
+            <TextBox Text="{Binding InternalMargin_TextBox_Text, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource, FallbackValue='0,0,0,0'}"
+                                 Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                 TextChanged="{mvvm:EventBinding DisplayImage_Image_SettingUpdate}">
+            </TextBox>
+        </DockPanel>
+    </StackPanel>
+</Page>

@@ -4,8 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageSpliter.View"
+        xmlns:mvvm="clr-namespace:MvvmEventBinding;assembly=MvvmEventBinding"
         mc:Ignorable="d"
-        Title="MainWindow2" Height="450" Width="800">
+        Title="MainWindow2" Height="450" Width="800"
+        DataContext="{Binding VM_MainViewModel, Source={StaticResource ViewModelLocator}}"
+        KeyDown="{mvvm:EventBinding Window_KeyDown}">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -13,14 +16,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="#F0F0F0">
-            <ComboBox SelectedIndex="0" Width="220" Height="40" FontSize="16" VerticalContentAlignment="Center" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem Content="Grid Mode" />
-                <ComboBoxItem Content="WhiteSpaceRemove Mode" />
-                <ComboBoxItem Content="Crop Mode" />
+        <DockPanel Grid.Column="0" Background="#F0F0F0">
+            <ComboBox SelectedIndex="{Binding CurrentMode}" MinWidth="220" Height="40" FontSize="16" DockPanel.Dock="Top"
+                      ItemsSource="{Binding ImageSplitMode_ComboBox_ItemsSource}" DisplayMemberPath="Name"
+                      VerticalContentAlignment="Center" SelectionChanged="{mvvm:EventBinding SplitModeChanged}">
             </ComboBox>
-        </StackPanel>
+            <Frame Name="MenuFrame" Source="pack://application:,,,/View/GridMenuPage.xaml" NavigationUIVisibility="Hidden" />
+        </DockPanel>
 
-        <Frame Name="myFrame" Grid.Column="1" Source="pack://application:,,,/View/GridPage.xaml"></Frame>
+        <Frame Name="ContentFrame" Grid.Column="1" Source="pack://application:,,,/View/GridPage.xaml"  NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>

@@ -14,6 +14,8 @@ using System.Drawing.Imaging;
 using ImageSpliter.Model;
 
 using System.Windows.Input;
+using System.Windows.Controls;
+using System.Reflection;
 
 namespace ImageSpliter.ViewModel
 {
@@ -33,8 +35,6 @@ namespace ImageSpliter.ViewModel
         public bool IsBitmapEnable => _originalBitmap != null && _originalBitmap.PixelFormat != System.Drawing.Imaging.PixelFormat.DontCare;
 
         #region Public Properties
-        public double GridModeHeight { get; set; }
-        public double WhiteSpaceRemoveModeHeight { get; set; }
 
         /// <summary>
         /// 불러와진 이미지 주소
@@ -42,9 +42,9 @@ namespace ImageSpliter.ViewModel
         public string Uri_TextBox_Text { get; set; }
 
         /// <summary>
-        /// 선택된 자르기 모드
+        /// 선택된 ImageSplit 모드
         /// </summary>
-        public int SplitMode_SelectedIndex { get; set; }
+        public ImageSplitMode CurrentMode { get; set; }
 
         /// <summary>
         /// 세로로 자를 개수
@@ -93,7 +93,7 @@ namespace ImageSpliter.ViewModel
         /// <summary>
         /// 이미지 스플릿 모드
         /// </summary>
-        public ObservableCollection<ImageSplitMode> ImageSplitMode_ComboBox_ItemsSource { get; set; }
+        public ObservableCollection<ModeName> ImageSplitMode_ComboBox_ItemsSource { get; set; }
 
         /// <summary> 
         /// 현재 이미지의 표시 모드 변경 리스트 
@@ -130,7 +130,7 @@ namespace ImageSpliter.ViewModel
         /// <summary>
         /// 자르기 모드가 변경된 경우
         /// </summary>
-        public RelayCommand SplitModeChanged { get; set; }
+        public RelayCommand<SelectionChangedEventArgs> SplitModeChanged { get; set; }
 
         /// <summary>
         /// 이미지를 클립보드로 저장합니다.
@@ -155,13 +155,15 @@ namespace ImageSpliter.ViewModel
             this.DisplayImage_Image_SettingUpdate = new RelayCommand(DisplayImage_Image_SettingUpdate_Command);
             this.Cut_Button_Click = new RelayCommand(Cut_Button_Click_Command);
             this.ImageDrop = new RelayCommand<DragEventArgs>(LoadImageFromDragDrop_Command);
-            this.SplitModeChanged = new RelayCommand(SplitModeChanged_Command);
+            this.SplitModeChanged = new RelayCommand<SelectionChangedEventArgs>(SplitMode_SelectionChanged);
             this.CopyClipBoard = new RelayCommand(SaveToClipboard_Command);
             this.Window_KeyDown = new RelayCommand<KeyEventArgs>(Window_KeyDown_Command);
 
-            this.ImageSplitMode_ComboBox_ItemsSource = new ObservableCollection<ImageSplitMode>();
-            this.ImageSplitMode_ComboBox_ItemsSource.Add(ImageSplitMode.GridMode);
-            this.ImageSplitMode_ComboBox_ItemsSource.Add(ImageSplitMode.WhiteSpaceRemoveMode);
+            // ComboBox 모드 변경시 보여질 리스트들
+            this.ImageSplitMode_ComboBox_ItemsSource = new ObservableCollection<ModeName>();
+            this.ImageSplitMode_ComboBox_ItemsSource.Add(new ModeName("Grid Mode", ImageSplitMode.GridMode));
+            this.ImageSplitMode_ComboBox_ItemsSource.Add(new ModeName("WhiteSpaceRemove Mode", ImageSplitMode.WhiteSpaceRemoveMode));
+            this.ImageSplitMode_ComboBox_ItemsSource.Add(new ModeName("Crop Mode", ImageSplitMode.CropMode));
 
             this.DisplayImageMode_ComboBox_ItemsSource = new ObservableCollection<Stretch>();
             this.DisplayImageMode_ComboBox_ItemsSource.Add(Stretch.None);
@@ -172,8 +174,7 @@ namespace ImageSpliter.ViewModel
             // GridMode 잘려질 좌표값들 리스트
             this._rectedImages = new List<Rectangle>();
 
-            this.SplitMode_SelectedIndex = 0;
-            this.GridModeHeight = double.NaN;
+            this.CurrentMode = ImageSplitMode.GridMode;
             this._currentSplitMode = ImageSplitMode.GridMode;
 
             // TextBox 초기값
@@ -189,24 +190,32 @@ namespace ImageSpliter.ViewModel
         /// <summary>
         /// 자르기 모드가 변경되었습니다.
         /// </summary>
-        private void SplitModeChanged_Command()
+        private void SplitMode_SelectionChanged()
         {
-            switch (SplitMode_SelectedIndex)
+            switch (CurrentMode)
             {
                 case 0:
-                    _currentSplitMode = ImageSplitMode.GridMode;
-                    GridModeHeight = double.NaN;
-                    WhiteSpaceRemoveModeHeight = 0;
+                    ContentFrame.Source = new Uri("pack://application:,,,/View/GridPage.xaml");
+                    MenuFrame.Source = new Uri("pack://application:,,,/View/GridMenuPage.xaml");
                     break;
                 case 1:
-                    _currentSplitMode = ImageSplitMode.WhiteSpaceRemoveMode;
-                    GridModeHeight = 0;
-                    WhiteSpaceRemoveModeHeight = double.NaN;
+                    ContentFrame.Source = new Uri("pack://application:,,,/View/RemoveWhitePage.xaml");
+                    MenuFrame.Source = new Uri("pack://application:,,,/View/RemoveWhiteMenuPage.xaml");
+                    break;
+                case 2:
+                    ContentFrame.Source = new Uri("pack://application:,,,/View/CropPage.xaml");
+                    MenuFrame.Source = new Uri("pack://application:,,,/View/CropMenuPage.xaml");
                     break;
                 default:
                     break;
             }
+
             DisplayImage_Image_SettingUpdate_Command();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -299,7 +308,7 @@ namespace ImageSpliter.ViewModel
             }
         }
 
-        
+
         private void GridModeImageSplit()
         {
             List<int> x_AxisSplit = new List<int>();        // x축 잘라질 좌표값
@@ -400,7 +409,7 @@ namespace ImageSpliter.ViewModel
                 int top = 0;
                 int right = OriginalBitmap.Width - 1;
                 int bottom = OriginalBitmap.Height - 1;
-                
+
 
                 for (int x = 0; x < OriginalBitmap.Width; x++)
                 {
@@ -442,8 +451,8 @@ namespace ImageSpliter.ViewModel
             var image = new Bitmap(_rectedImages[0].Width, _rectedImages[0].Height);
             var graphics = Graphics.FromImage(image);
             graphics.DrawImage(OriginalBitmap,
-                               new Rectangle(0, 0, _rectedImages[0].Width, _rectedImages[0].Height), 
-                               _rectedImages[0], 
+                               new Rectangle(0, 0, _rectedImages[0].Width, _rectedImages[0].Height),
+                               _rectedImages[0],
                                GraphicsUnit.Pixel);
             graphics.Dispose();
             Clipboard.SetImage(BitmapExtension.BitmapToBitmapImage(image));

@@ -9,6 +9,7 @@ namespace ImageSpliter.Model
     public enum ImageSplitMode
     {
         GridMode,
-        WhiteSpaceRemoveMode
+        WhiteSpaceRemoveMode,
+        CropMode
     }
 }

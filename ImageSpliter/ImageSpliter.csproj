@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Folder Include="Converter\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>
