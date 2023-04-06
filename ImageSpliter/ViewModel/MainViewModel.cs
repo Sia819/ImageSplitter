@@ -17,7 +17,7 @@ using System.Windows.Input;
 
 namespace ImageSpliter.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -31,7 +31,6 @@ namespace ImageSpliter.ViewModel
             }
         }
         public bool IsBitmapEnable => _originalBitmap != null && _originalBitmap.PixelFormat != System.Drawing.Imaging.PixelFormat.DontCare;
-
 
         #region Public Properties
         public double GridModeHeight { get; set; }
@@ -107,7 +106,6 @@ namespace ImageSpliter.ViewModel
         public BitmapImage DisplayImage_Image_Source { get; set; }
         #endregion Public Properties
 
-        
         #region Commands
         /// <summary>
         /// 이미지 불러오기 버튼 커맨드
@@ -142,7 +140,6 @@ namespace ImageSpliter.ViewModel
         public RelayCommand<KeyEventArgs> Window_KeyDown { get; set; }
         #endregion Commands
 
-
         #region private fields
         private EventHandler _originalBitmap_ImageChanged;
         private List<Rectangle> _rectedImages;
@@ -151,7 +148,7 @@ namespace ImageSpliter.ViewModel
         #endregion
 
         #region Constructor
-        public MainWindowViewModel()
+        public MainViewModel()
         {
             // Command 바인딩 리스너 등록
             this.FindImage_Button_Click = new RelayCommand(LoadImageFromDialog_Command);
@@ -471,6 +468,5 @@ namespace ImageSpliter.ViewModel
             }
         }
         #endregion
-
     }
 }

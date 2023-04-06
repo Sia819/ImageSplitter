@@ -1,4 +1,4 @@
-﻿<Window x:Class="ImageSpliter.MainWindow"
+﻿<Window x:Class="ImageSpliter.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +12,7 @@
         Title="MainWindow" Height="650" Width="1000"
         KeyDown="{mvvm:EventBinding Window_KeyDown}">
     <Window.DataContext>
-        <viewmodel:MainWindowViewModel/>
+        <viewmodel:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <converter:InvertBooleanConverter x:Key="InvertBooleanConverter"/>

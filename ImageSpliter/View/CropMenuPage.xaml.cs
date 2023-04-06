@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageSpliter
+namespace ImageSpliter.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// CropMenuPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CropMenuPage : Page
     {
-        public MainWindow()
+        public CropMenuPage()
         {
             InitializeComponent();
         }
