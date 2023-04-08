@@ -36,23 +36,18 @@ namespace ImageSplitter.ViewModel
 
         public CropVM()
         {
-            DisplayImages.CollectionChanged += (sender, e) => DisplayImageUpdate(); 
-            this.SelectedImage = 0;
+            this.SelectedImage = -1;
             this.ImageDrop = new RelayCommand<DragEventArgs>(LoadImageFromDragDrop_Command);
-        }
-
-        void DisplayImageUpdate(int changeSelectIndex = 0)
-        {
-            if (DisplayImages.Count > 0) SelectedImage = changeSelectIndex;
         }
 
         /// <summary>
         /// 드래그 앤 드롭으로 이미지를 가져옵니다.
         /// </summary>
-        /// <param name="e"></param>
         private void LoadImageFromDragDrop_Command(DragEventArgs? e)
         {
-            if (e!.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e is null) return;
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 foreach (string path in (string[])e.Data.GetData(DataFormats.FileDrop))
                 {
@@ -72,7 +67,7 @@ namespace ImageSplitter.ViewModel
                         MessageBox.Show("이미지 파일이 올바르지 않습니다.");
                         return;
                     }
-                    DisplayImageUpdate(DisplayImages.Count - 1);
+                    this.SelectedImage = DisplayImages.Count - 1;
                 }
             }
             else
@@ -86,6 +81,8 @@ namespace ImageSplitter.ViewModel
         /// </summary>
         public void KeyDown_Command(KeyEventArgs? e)
         {
+            if (e is null) return;
+
             if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 if (Clipboard.ContainsImage())
@@ -93,6 +90,7 @@ namespace ImageSplitter.ViewModel
                     var img = BitmapExtension.BitmapSourceToBitmap(Clipboard.GetImage());
                     this.OriginalBitmaps.Add(img);
                     this.DisplayImages.Add(BitmapExtension.BitmapToBitmapImage(img));
+                    this.SelectedImage = DisplayImages.Count - 1;
                 }
             }
             else if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)

@@ -54,11 +54,12 @@
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
+                        <StackPanel Orientation="Horizontal" /> 
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
         </Grid>
+        <TextBlock Text="{Binding SelectedImage}"/>
 
     </Grid>
 </Page>
