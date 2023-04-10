@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -96,6 +97,9 @@ namespace ImageSplitter.ViewModel
             }
             else if (e.Key == Key.Delete)
             {
+                if (SelectedImage < 0) return;
+                if (OriginalBitmaps.Count <= 0) return;
+
                 OriginalBitmaps.RemoveAt(SelectedImage);
                 DisplayImages.RemoveAt(SelectedImage);
             }
@@ -178,7 +182,26 @@ namespace ImageSplitter.ViewModel
 
         void ExportAllImages_Command()
         {
+            int outputImages = RectedImages.Count * OriginalBitmaps.Count;
+            int outputImageCount = 0;
+            
+            System.Drawing.Image[] images = new System.Drawing.Image[outputImages];
 
+            for(int originImageCount = 0; originImageCount < OriginalBitmaps.Count; originImageCount++) 
+            {
+                for (int i = 0; i < RectedImages.Count; i++, outputImageCount++)
+                {
+                    images[outputImageCount] = new Bitmap(RectedImages[i].Width, RectedImages[i].Height);
+                    var graphics = Graphics.FromImage(images[outputImageCount]);
+                    graphics.DrawImage(OriginalBitmaps[originImageCount],
+                                       new Rectangle(0, 0, RectedImages[i].Width, RectedImages[i].Height),
+                                       RectedImages[i].ExportRectangle,
+                                       GraphicsUnit.Pixel);
+                    graphics.Dispose();
+                    images[outputImageCount].Save(outputImageCount + ".png", ImageFormat.Png);
+                }
+            }
+            
         }
 
         private void Render()
@@ -206,30 +229,34 @@ namespace ImageSplitter.ViewModel
             using Bitmap? temp = OriginalBitmaps[SelectedImage].Clone() as Bitmap;
             if (temp is null) throw new Exception("temp is null");
 
-            int minX = temp.Width, minY = temp.Height, maxX = 0, maxY = 0;
+            int fitX1 = rect.X;
+            int fitY1 = rect.Y;
+            int fitX2 = rect.Right;
+            int fitY2 = rect.Bottom;
+            
             if (IsFitMode == true)
             {
-                for (int x = 0; x < temp.Width; x++)
+                for (int x = rect.Left; x < rect.Right; x++)
                 {
-                    for (int y = 0; y < temp.Height; y++)
+                    for (int y = rect.Top; y < rect.Bottom; y++)
                     {
                         System.Drawing.Color pixelColor = temp.GetPixel(x, y);
                         if (pixelColor.R < 240 || pixelColor.G < 240 || pixelColor.B < 240)
                         {
-                            minX = Math.Min(minX, x);
-                            minY = Math.Min(minY, y);
-                            maxX = Math.Max(maxX, x);
-                            maxY = Math.Max(maxY, y);
+                            fitX1 = Math.Max(fitX1, x);
+                            fitY1 = Math.Max(fitY1, y);
+                            fitX2 = Math.Min(fitX2, x);
+                            fitY2 = Math.Min(fitY2, y);
                         }
                     }
                 }
 
                 rect = new Rectangle()
                 {
-                    X = minX,
-                    Y = minY,
-                    Width = maxX - minX + 1,
-                    Height = maxY - minY + 1
+                    X = fitX2,
+                    Y = fitY2,
+                    Width = fitX1 - fitX2 + 1,
+                    Height = fitY1 - fitY2 + 1
                 };
             }
 

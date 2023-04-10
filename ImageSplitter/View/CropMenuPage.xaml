@@ -21,7 +21,7 @@
             <Grid/>
         </DockPanel>
 
-        <Button Content="Export All" DockPanel.Dock="Bottom"/>
+        <Button Content="Export All" DockPanel.Dock="Bottom" Command="{Binding ExportAllImages}"/>
 
         <ListBox Name="RectItems" ItemsSource="{Binding RectedImages}" Margin="5">
             <ListBox.ItemTemplate>
