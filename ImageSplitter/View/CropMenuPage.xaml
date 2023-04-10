@@ -5,9 +5,43 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ImageSplitter.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="300" d:Background="White"
-      Title="CropMenuPage">
-    <StackPanel>
+      d:Height="450" d:Width="350" d:Background="White"
+      Title="CropMenuPage"
+      DataContext="{Binding VM_Page1VM, Source={StaticResource ViewModelLocator}}">
+    <DockPanel>
+        <!-- Crop area add-->
+        <DockPanel DockPanel.Dock="Top">
+            <GroupBox Header="Options" Padding="0 0 40 0" Margin="6">
+                <StackPanel Margin="5">
+                    <CheckBox Content="Fit mode" IsChecked="{Binding IsFitMode}"/>
+                </StackPanel>
+            </GroupBox>
+            <Button Content="Capture" Margin="7" Width="70" Height="35" DockPanel.Dock="Right"
+                    Command="{Binding AddRectedImage}"/>
+            <Grid/>
+        </DockPanel>
+
+        <Button Content="Export All" DockPanel.Dock="Bottom"/>
+
+        <ListBox Name="RectItems" ItemsSource="{Binding RectedImages}" Margin="5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="X : "/>
+                        <TextBox MinWidth="40" Margin="0 0 10 0" Text="{Binding X}"/>
+                        <TextBlock Text="Y : "/>
+                        <TextBox MinWidth="40" Margin="0 0 10 0" Text="{Binding Y}"/>
+                        <TextBlock Text="W : "/>
+                        <TextBox MinWidth="40" Margin="0 0 10 0" Text="{Binding Width}"/>
+                        <TextBlock Text="H : "/>
+                        <TextBox MinWidth="40" Margin="0 0 10 0" Text="{Binding Height}"/>
+                        <Button Content="X" Padding="10 0" 
+                                Command="{Binding DataContext.RemoveRectedImage, ElementName=RectItems}" 
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         
-    </StackPanel>
+    </DockPanel>
 </Page>

@@ -23,6 +23,7 @@ namespace ImageSplitter.View
         public CropMenuPage()
         {
             InitializeComponent();
+            
         }
     }
 }

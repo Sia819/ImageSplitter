@@ -185,7 +185,7 @@ namespace ImageSplitter.ViewModel
 
         #region Private Command
         /// <summary>
-        /// 자르기 모드가 변경되었습니다.
+        /// Split 모드가 변경됨에 따라 다른 뷰를 제공.
         /// </summary>
         private void SplitMode_SelectionChanged()
         {
@@ -347,10 +347,10 @@ namespace ImageSplitter.ViewModel
                     for (int i = 0; i < SplitColumnsCount_TextBox_Text + 1; i++)
                     {
                         graphics.DrawLine(columnPen,
-                            columnSplitAdder,
-                            calculatedSize.AnchorY1,
-                            columnSplitAdder,
-                            calculatedSize.AnchorY2);
+                                          columnSplitAdder,
+                                          calculatedSize.AnchorY1,
+                                          columnSplitAdder,
+                                          calculatedSize.AnchorY2);
                         x_AxisSplit.Add(columnSplitAdder);
                         columnSplitAdder += HorizontalSize_TextBox_Text;
                     }
@@ -359,10 +359,10 @@ namespace ImageSplitter.ViewModel
                     for (int i = 0; i < SplitRowsCount_TextBox_Text + 1; i++)
                     {
                         graphics.DrawLine(rowPen,
-                            calculatedSize.AnchorX1,
-                            rowSplitAdder,
-                            calculatedSize.AnchorX2,
-                            rowSplitAdder);
+                                          calculatedSize.AnchorX1,
+                                          rowSplitAdder,
+                                          calculatedSize.AnchorX2,
+                                          rowSplitAdder);
                         y_AxisSplit.Add(rowSplitAdder);
                         rowSplitAdder += VerticalSize_TextBox_Text;
                     }
@@ -382,9 +382,9 @@ namespace ImageSplitter.ViewModel
                             _rectedImages.Add(rectArea);
                             graphics.FillRectangle(rectanglePen, rectArea);
                             graphics.DrawString(count.ToString(),
-                                new Font("맑은 고딕", 14),
-                                stringPen,
-                                new System.Drawing.Point(x_AxisSplit[i], y_AxisSplit[j]));
+                                                new Font("맑은 고딕", 14),
+                                                stringPen,
+                                                new System.Drawing.Point(x_AxisSplit[i], y_AxisSplit[j]));
                         }
                     }
                 }

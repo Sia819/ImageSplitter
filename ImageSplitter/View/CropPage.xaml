@@ -31,35 +31,41 @@
                       SelectedIndex="2"
                       Width="100" />
         </StackPanel>
-        
+
         <!-- Image Display Area -->
-        <Rectangle Fill="LightGray" Grid.Column="0" Grid.Row="1" AllowDrop="True"
-                   Drop="{mvvm:EventBinding ImageDrop}"></Rectangle>
-        <Image Stretch="Uniform" Grid.Row="1">
+        <Rectangle Name="imgarea" Fill="LightGray" Grid.Column="0" Grid.Row="1" AllowDrop="True"
+                   Drop="{mvvm:EventBinding ImageDrop}"/>
+        <Image Name="img" Stretch="Uniform" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left"
+               PreviewMouseDown="Image_PreviewMouseDown" PreviewMouseUp="Image_PreviewMouseUp" PreviewMouseMove="Image_PreviewMouseMove" 
+               MouseEnter="img_MouseEnter" MouseLeave="img_MouseLeave">
             <Image.Source>
                 <MultiBinding Converter="{StaticResource SelectedImageConverter}">
-                    <Binding Path="DisplayImages" />
+                    <Binding Path="DisplayImages" Mode="TwoWay" />
                     <Binding Path="SelectedImage" />
                 </MultiBinding>
             </Image.Source>
         </Image>
+        <Border Name="DragLine" Grid.Row="1" BorderThickness="1" BorderBrush="#a00078D7" Background="#a0B9D5F1" 
+                VerticalAlignment="Top" HorizontalAlignment="Left" Focusable="False" IsHitTestVisible ="False" Visibility="Hidden"/>
 
         <!-- Image Select Area -->
         <Grid Width="auto" Height="100" Background="AliceBlue" Grid.Row="2">
-            <ListBox ItemsSource="{Binding DisplayImages}" SelectedIndex="{Binding SelectedImage}">
+            <ListBox ItemsSource="{Binding DisplayImages}" SelectedIndex="{Binding SelectedImage}" SelectionChanged="{mvvm:EventBinding ImageSelectionChanged}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding}" Width="100" Height="100" Stretch="Uniform" Margin="5"/>
+                        <Grid>
+                            <Image Source="{Binding}" Width="100" Height="100" Stretch="Uniform" Margin="5"/>
+                            <Border Name="IsSelectedImage" Background="#66ff0000"/>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" /> 
+                        <StackPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
         </Grid>
         <TextBlock Text="{Binding SelectedImage}"/>
-
     </Grid>
 </Page>
